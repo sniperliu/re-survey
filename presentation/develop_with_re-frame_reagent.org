@@ -1,0 +1,162 @@
+#+Title: Develop SPA Frontend with re-frame & reagent
+#+Author: Hao Liu
+#+Email: sniperliuhao@gmail.com
+
+#+OPTIONS: reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t reveal_frag:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+OPTIONS: toc:1
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: cube
+#+REVEAL_THEME: black
+#+REVEAL_HLEVEL: 2
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Develop SPA Frontend with re-frame & reagent">
+#+REVEAL_POSTAMBLE: <p> Created by sniperliu. </p>
+#+REVEAL_PLUGINS: (markdown notes)
+
+* Single Page Application (SPA)
+
+  Wiki: "Single Page Application (SPA) is a web application or web site that fits on a single web page ... 'compete' native desktop '& mobile' application."
+
+** What does it mean for a developer?
+
+   [[./omg.jpg]]
+
+   #+REVEAL: split
+   * Client/server code partitioning
+     * design
+     * testing
+     * operation
+   * Data transport and binding
+   * Lots of new techniques
+     * HTML5
+       * Ajax
+       * Websocket
+     * new frameworks
+   * More on [[https://en.wikipedia.org/wiki/Single-page_application#Challenges_with_the_SPA_model][Wiki]]
+
+* Here comes our saver!!
+
+  [[./saver.jpg]]
+
+  #+REVEAL: split
+  * Functional programming
+  * Data oriented design/data driven
+  * Clojure/ClojureScript
+  * re-frame
+  * ...
+
+* Re-frame
+    :PROPERTIES:
+    :reveal_background: ./re-frame_128w.png
+    :reveal_background_size: 500px
+    :reveal_background_repeat: none
+    :END:
+
+   A *Reagent* Framework For Writing SPAs, in Clojurescript.
+
+   #+REVEAL: split
+|-----------------+-------------+------------+-------------+----------------+-------------+------------+-------------+------------|
+| app-db          | \rightarrow | view       | \rightarrow | Reagent        | \rightarrow | React      | \rightarrow | DOM        |
+| \uparrow        |             |            |             |                |             |            |             | \downarrow |
+| effect-handlers |             | \leftarrow |             | event handlers |             | \leftarrow |             | dispatch   |
+
+#+REVEAL: split
+
+   * db.cljs (data and schema layer)
+     #+BEGIN_SRC clojure
+     (def db {})
+     ;; with spec
+     (spec/def spa-db
+       (spec/keys :req [::a ...]))
+     #+END_SRC
+   * subs.cljs (query layer)
+     #+BEGIN_SRC clojure
+     (re-frame.core/reg-sub
+       :query-items
+       (fn [db _] (:items db)))
+     #+END_SRC
+   * events.cljs (control and transition layer)
+     #+BEGIN_SRC clojure
+     (re-frame.core/reg-event-fx
+       :event-id
+       (fn [{:keys [db ...]} event]
+         ...
+         {:db (assoc-in db [:items ...])}))
+     #+END_SRC
+   * view.cljs (view layer)
+     #+BEGIN_SRC clojure
+     (defn items
+       (let [items (subscribe [:query-items])]
+         [:div (map item-render @items)]))
+     #+END_SRC
+
+#+REVEAL: split
+   For large project, you could have multiple panels like below
+
+#+BEGIN_SRC shell
+src
+├── panel-1
+│   ├── db.cljs           <--- schema, validation, etc  (data layer)
+│   ├── subs.cljs         <--- subscription handlers  (query layer)
+│   ├── views.cljs        <--- reagent components (view layer)
+│   └── events.cljs       <--- event handlers (control/update layer)
+├── panel-2
+│   ├── db.cljs           <--- schema, validation. etc  (data layer)
+│   ├── subs.cljs         <--- subscription handlers  (query layer)
+│   ├── views.cljs        <--- reagent components (view layer)
+│   └── events.cljs       <--- event handlers (control/update layer)
+.
+.
+└── panel-n
+#+END_SRC
+
+#+REVEAL: split
+   * Effects - what your event handler does to the world (aka side-effects)
+     #+BEGIN_SRC clojure
+     (re-frame.core/reg-fx
+     )
+     #+END_SRC
+   * Coeffects - the data your event handler requires from the world in order to do its computation (aka side-causes)
+     #+BEGIN_SRC clojure
+     (re-frame.core/reg-cofx
+     )
+     #+END_SRC
+
+** Cons
+
+   #+ATTR_REVEAL: :frag (roll-in roll-in roll-in)
+   * Smelly global state
+   * Heavily Bound with Reagent
+   * It's a framework
+
+** Pros
+   * Separate of concern
+
+** Reagent
+
+  Reagent is a "simple" ClojureScript interface to React.
+
+** Get started
+
+   #+BEGIN_SRC shell
+   $ lein new re-frame re-spa +cider +test +re-frisk +routes
+
+   ;; More details on https://github.com/Day8/re-frame-template
+   #+END_SRC
+
+* Questions
+
+* Reference
+
+ * [[https://reagent-project.github.io/][Reagent Tutorial]]
+
+ * [[https://github.com/reagent-project/reagent][Reagent Project]]
+
+ * [[https://github.com/Day8/re-frame][re-frame]]
+
+* Dojo
+
