@@ -126,6 +126,14 @@ src
      )
      #+END_SRC
 
+#+REVEAL: split
+   Interceptors
+
+** Pros
+   * Separate of concern
+     * Composibility
+     * Easy to test
+
 ** Cons
 
    #+ATTR_REVEAL: :frag (roll-in roll-in roll-in)
@@ -133,20 +141,10 @@ src
    * Heavily Bound with Reagent
    * It's a framework
 
-** Pros
-   * Separate of concern
-
 ** Reagent
 
   Reagent is a "simple" ClojureScript interface to React.
 
-** Get started
-
-   #+BEGIN_SRC shell
-   $ lein new re-frame re-spa +cider +test +re-frisk +routes
-
-   ;; More details on https://github.com/Day8/re-frame-template
-   #+END_SRC
 
 * Questions
 
@@ -159,4 +157,30 @@ src
  * [[https://github.com/Day8/re-frame][re-frame]]
 
 * Dojo
+
+  * Setup
+  * Go through prototype
+  * Design model & Event
+  * Implement view component & register query
+  * Implement event handler
+  * Show result with graphics
+
+** Get started
+
+   #+BEGIN_SRC shell
+   $ lein new re-frame re-spa +cider +test +re-frisk +routes
+
+   ;; More details on https://github.com/Day8/re-frame-template
+   #+END_SRC
+
+** Further job
+
+  * REST or GraphQL in the backend
+  * Register fx to load model from remote
+  * Security like Authentication
+  * I18N
+  * Save temporary result in local storage
+  * Admin console
+  * Much more features ...
+
 

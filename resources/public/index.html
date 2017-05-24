@@ -2,12 +2,52 @@
 <html lang="en">
   <head>
     <meta charset='utf-8'>
-    
-    
+    <title>Re-frame Survey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/index.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div id="main" class="form">
+        <form>
+          <!--
+          <div class="question">
+            <label for="2" class="q-title">3. Another question</label>
+            <div>
+              <div class="elem-radio-check">
+                <input type="radio" name="2" id="20" value="1">
+                <label for="20">option 1</label>
+              </div>
+            </div>
+          </div>
+          -->
+          <div class="question">
+            <label for="3" class="q-title">Which domains are you interested in clojure/clojurescript?</label>
+            <div>
+              <div class="elem-radio-check">
+                <input type="checkbox" name="3" id="30" value="4">
+                <label for="20">Web Development</label>
+              </div>
+              <div class="elem-radio-check">
+                <input type="checkbox" name="3" id="30" value="4">
+                <label for="20">Data Science</label>
+              </div>
+              <div class="elem-radio-check">
+                <input type="checkbox" name="3" id="30" value="4">
+                <label for="20">Artificial Intelligence</label>
+              </div>
+              <div class="elem-radio-check">
+                <input type="checkbox" name="3" id="30" value="4">
+                <label for="20">Scientific Calculation</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!--
     <script src="js/compiled/app.js"></script>
     <script>re_survey.core.init();</script>
+    -->
   </body>
 </html>
