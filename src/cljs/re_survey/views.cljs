@@ -3,9 +3,10 @@
 
 ;; survey
 (defn option
-  [opt]
+  [title opt]
   [:div.elem-radio-check
-   [:input {:type "checkbox"}]
+   [:input {:type "checkbox"
+            :on-click #(re-frame/dispatch [:select-option title opt])}]
    [:label opt]])
 
 (defn title
@@ -18,7 +19,7 @@
    [title t]
    [:div
     (for [opt options]
-      ^{:key opt} [option opt])]])
+      ^{:key opt} [option t opt])]])
 
 (defn survey-panel
   []
