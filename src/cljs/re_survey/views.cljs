@@ -1,6 +1,34 @@
 (ns re-survey.views
     (:require [re-frame.core :as re-frame]))
 
+;; survey
+(defn option
+  [opt]
+  [:div.elem-radio-check
+   [:input {:type "checkbox"}]
+   [:label opt]])
+
+(defn title
+  [t]
+  [:label {:class "q-title"} t])
+
+(defn question
+  [{t :title options :options}]
+  [:div.question
+   [title t]
+   [:div
+    (for [opt options]
+      ^{:key opt} [option opt])]])
+
+(defn survey-panel
+  []
+  (let [srv (re-frame/subscribe [:survey])]
+    (fn []
+      [:div#main.form
+       [:form
+        (for [qn @srv]
+          ^{:key (:title qn)} [question qn])]])))
+
 
 ;; home
 
